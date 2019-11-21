@@ -12,7 +12,7 @@ var url = 'mongodb://localhost:27017/prison';
 mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: true
+    useFindAndModify: false
 });
 
 var app = express();
