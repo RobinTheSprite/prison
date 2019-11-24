@@ -25,10 +25,20 @@ router.get('/prisoner', function(req, res, next) {
 //Update
 router.get('/prisoner/update', (req, res) => {
     const query = req.query;
-    const prisonerId = query.id;
-    delete query['id'];
+    var update = {};
 
-    Prisoner.model.findByIdAndUpdate(prisonerId, query, {new: true})
+    if (query.fieldToUpdate === "crimes" || query.fieldToUpdate === "courtDates")
+    {
+        const temp = {};
+        temp[query.fieldToUpdate] = query.valueToUpdate;
+        update["$push"] = temp;
+    }
+    else
+    {
+        update[query.fieldToUpdate] = query.valueToUpdate;
+    }
+
+    Prisoner.model.findOneAndUpdate({ssn: query.ssn}, update)
         .then(prisoner => {
             res.json({
                 confirmation: 'success',
@@ -45,12 +55,11 @@ router.get('/prisoner/update', (req, res) => {
 
 //Delete
 router.get('/prisoner/remove', (req, res) => {
-    const query = req.query;
-    Prisoner.model.findByIdAndRemove(query.id)
+    Prisoner.model.findOneAndRemove({ssn: parseInt(req.query.ssn)})
         .then(data => {
             res.json({
                 confirmation: 'success',
-                data: 'Prisoner with id ' + query.id + ' has been removed'
+                data: 'Prisoner with id ' + query.ssn + ' has been removed'
             })
         })
         .catch(err => {
@@ -63,7 +72,17 @@ router.get('/prisoner/remove', (req, res) => {
 
 //Create
 router.post('/prisoner', (req, res) => {
-    Prisoner.model.create(req.body)
+    const body = req.body;
+    const crimes = body.crimes.split('\n');
+    const courtDates = body.courtDates.split('\n');
+    delete body.courtDates;
+    delete  body.crimes;
+
+    const prisoner = new Prisoner.model(body);
+    prisoner.courtDates = courtDates;
+    prisoner.crimes = crimes;
+
+    Prisoner.model.create(prisoner)
         .then(prisoner => {
             res.json({
                 confirmation: 'success',

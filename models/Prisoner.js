@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Person = require('./Person');
 
 const prisoner = {
-    crime: {type: String},
+    crimes: {type: [{type: String, trim: true}]},
     admitDate: {type: Date},
     releaseDate: {type: Date},
     clearance: {type: String},
