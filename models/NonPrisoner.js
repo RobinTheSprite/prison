@@ -17,9 +17,9 @@ const AddressSchema = mongoose.Schema({
     zip: {type: Number, maxlength: 5}
 });
 
-const NonPrisonerSchema = mongoose.Schema({
+const NonPrisonerSchema = {
     addresses: {type: [AddressSchema]},
     phone: {type: Number, maxlength: 10}
-});
+};
 
-module.exports = mongoose.model('NonPrisoner', NonPrisonerSchema);
+module.exports = NonPrisonerSchema;
