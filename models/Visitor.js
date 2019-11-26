@@ -3,8 +3,6 @@ const Person = require('./Person');
 const NonPrisoner = require('./NonPrisoner');
 
 const visitor = {
-    personInfo: {type: Person},
-    nonPrisonerInfo: {type: NonPrisoner},
     visitDate: {type: Date},
     timeIn: {type: Date, default: Date.now},
     timeOut: {type: Date, default: Date.now},
