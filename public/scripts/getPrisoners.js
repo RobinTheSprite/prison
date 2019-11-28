@@ -5,6 +5,10 @@ function addCell(tr, val) {
     {
         td.style.overflow = 'auto';
         val.forEach((item) => {
+            if (!isNaN(Date.parse(item)))
+            {
+                item = item.split('T')[0];
+            }
             td.innerHTML += item + '<br/>';
         })
     }
@@ -24,8 +28,15 @@ function addRow(tbl, data) {
     addCell(tr, data.middleName);
     addCell(tr, data.lastName);
     addCell(tr, data.crimes);
-    addCell(tr, data.admitDate);
-    addCell(tr, data.releaseDate);
+    addCell(tr, data.admitDate.split('T')[0]);
+
+    if (data.releaseDate) {
+        addCell(tr, data.releaseDate.split('T')[0])
+    }
+    else {
+        addCell(tr, data.releaseDate)
+    }
+
     addCell(tr, data.courtDates);
 
     tbl.appendChild(tr)

@@ -5,7 +5,11 @@ function addCell(tr, val) {
     {
         td.style.overflow = 'auto';
         val.forEach((item) => {
-            td.innerHTML += item + '<br/>';
+            delete item._id;
+            Object.values(item).forEach(itemVal => {
+                td.innerHTML += itemVal + ' ';
+            });
+            td.innerHTML += '<br/>';
         })
     }
     else
@@ -25,7 +29,7 @@ function addRow(tbl, data) {
     addCell(tr, data.lastName);
     addCell(tr, data.addresses);
     addCell(tr, data.phone);
-    addCell(tr, data.visitDate);
+    addCell(tr, data.visitDate.split('T')[0]);
     addCell(tr, data.timeIn);
     addCell(tr, data.timeOut);
     addCell(tr, data.visited);

@@ -2,10 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 const Prisoner = require('../models/Prisoner');
-const Person = require('../models/Person');
 
 //Read
-router.get('/prisoner', function(req, res, next) {
+router.get('/prisoner', (req, res) => {
     const query = req.query;
     Prisoner.model.find(query)
         .then(prisoner => {
@@ -55,7 +54,7 @@ router.get('/prisoner/update', (req, res) => {
 
 //Delete
 router.get('/prisoner/remove', (req, res) => {
-    Prisoner.model.findOneAndRemove({ssn: parseInt(req.query.ssn)})
+    Prisoner.model.findOneAndRemove({ssn: req.query.ssn})
         .then(data => {
             res.json({
                 confirmation: 'success',

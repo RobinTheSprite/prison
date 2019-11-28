@@ -18,22 +18,28 @@ block content
           label Last Name
             input(type='text', name='lastName', required=true).form-control
       div.form-group
-          label Crime(s) Committed
-            textarea(name='crimes', required=true).form-control
+          label Addresses
+            textarea(name='addresses', required=true).form-control
       div.form-group
-          label Date of Admission
-            input(type='date', name='admitDate', required=true).form-control
+          label Phone Number
+            input(type='phone', name='phone', required=true).form-control
       div.form-group
-          label Date of Release
-            input(type='date', name='releaseDate').form-control
+          label Date of Visit
+            input(type='date', name='visitDate').form-control
       div.form-group
-          label Court Dates
-            textarea(name='courtDates').form-control
+          label Time In
+            input(type='time', name='timeIn').form-control
+      div.form-group
+        label Time Out
+          input(type='time', name='timeOut').form-control
+      div.form-group
+        label Visited Prisoner
+          input(type='text', name='visited').form-control
       div.form-group
           input(type='submit')
 
   .container.bg-light.col-md-2
-    h2 Update Prisoner
+    h2 Update Visitor
     form(method='get', action='api/visitor/update')
       div.form-group
         label Social Security Number
@@ -45,10 +51,12 @@ block content
             option(value='firstName') First Name
             option(value='middleName') Middle Name
             option(value='lastName') Last Name
-            option(value='crimes') Crime
-            option(value='admitDate') Admission Date
-            option(value='releaseDate') Release Date
-            option(value='courtDates') Court Date
+            option(value='addresses') Address
+            option(value='phone') Phone Number
+            option(value='visitDate') Date of Visit
+            option(value='timeIn') Time In
+            option(value='timeOut') Time Out
+            option(value='visited') Visited Prisoner
       div.form-group
         label Value to Update
           input(type='text', name='valueToUpdate')
@@ -56,7 +64,7 @@ block content
         input(type='submit')
 
   .container.bg-light.col-md-2
-    h2 Delete Prisoner
+    h2 Delete Visitor
     form(method='get', action='api/visitor/remove')
       div.form-group
         label Social Security Number
@@ -72,7 +80,9 @@ block content
         th First Name
         th Middle Name
         th Last Name
-        th Crime(s)
-        th Admitted
-        th Released
-        th Court Dates
+        th Addresses
+        th Phone Number
+        th Date of Visit
+        th Time In
+        th Time Out
+        th Visited Prisoner

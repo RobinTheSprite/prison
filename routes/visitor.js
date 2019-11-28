@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const Visitor = require('../models/Visitor');
+const Prisoner = require('../models/Prisoner');
 
 //Read
 router.get('/visitor', function(req, res, next) {
@@ -54,7 +55,7 @@ router.get('/visitor/update', (req, res) => {
 
 //Delete
 router.get('/visitor/remove', (req, res) => {
-    Visitor.model.findOneAndRemove({ssn: parseInt(req.query.ssn)})
+    Visitor.model.findOneAndRemove({ssn: req.query.ssn})
         .then(data => {
             res.json({
                 confirmation: 'success',
@@ -72,23 +73,43 @@ router.get('/visitor/remove', (req, res) => {
 //Create
 router.post('/visitor', (req, res) => {
     const body = req.body;
-    const addresses = body.addresses.split('\n');
+    const addresses = [];
+    const unparsedAddresses = body.addresses.split('\n');
+    unparsedAddresses.forEach((address) => {
+        const values = address.split(',');
+        const temp = {};
+        temp.street = values[0];
+        temp.city = values[1];
+        temp.state = values[2];
+        temp.zip = values[3];
+        addresses.push(temp);
+    });
     delete body.addresses;
 
-    const prisoner = new Visitor.model(body);
-    prisoner.addresses = addresses;
+    const visitor = new Visitor.model(body);
+    visitor.addresses = addresses;
 
-    Visitor.model.create(visitor)
-        .then(visitor => {
-            res.json({
-                confirmation: 'success',
-                data: visitor
-            })
+    Prisoner.model.findOne({ssn: body.visited})
+        .then(prisoner => {
+            visitor.visited = prisoner.ssn;
+            Visitor.model.create(visitor)
+                .then(visitor => {
+                    res.json({
+                        confirmation: 'success',
+                        data: visitor
+                    })
+                })
+                .catch(err => {
+                    res.json({
+                        confirmation: 'fail',
+                        message: err.message
+                    })
+                })
         })
-        .catch(err => {
+        .catch((err) => {
             res.json({
-                confirmation: 'fail',
-                message: err.message
+                confirmation:'fail',
+                message: 'Prisoner with SSN ' + body.visited + ' not found'
             })
         })
 });

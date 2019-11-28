@@ -9,7 +9,7 @@ const prisoner = {
     courtDates: {type: [Date]}
 };
 
-const personPrisoner = Object.assign(Person, prisoner);
+const personPrisoner = Object.assign(prisoner, Person);
 
 const prisonerSchema = mongoose.Schema(personPrisoner);
 

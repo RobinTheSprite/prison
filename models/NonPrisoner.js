@@ -13,7 +13,7 @@ const states = [
 const AddressSchema = mongoose.Schema({
     street: {type: String},
     city: {type: String},
-    state: {type: String, enum: states},
+    state: {type: String, enum: states, trim: true},
     zip: {type: Number, maxlength: 5}
 });
 
