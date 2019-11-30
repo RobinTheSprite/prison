@@ -28,6 +28,7 @@ function addRow(tbl, data) {
     addCell(tr, data.middleName);
     addCell(tr, data.lastName);
     addCell(tr, data.crimes);
+    addCell(tr, data.clearance);
     addCell(tr, data.admitDate.split('T')[0]);
 
     if (data.releaseDate) {

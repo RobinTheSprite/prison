@@ -6,6 +6,7 @@ const prisoner = {
     admitDate: {type: Date},
     releaseDate: {type: Date},
     clearance: {type: String},
+    cellLocation: {type: String, trim: true},
     courtDates: {type: [Date]}
 };
 
