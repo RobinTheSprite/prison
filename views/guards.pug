@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  script(src='/scripts/getVisitors.js')
+  script(src='/scripts/getGuards.js')
   .container.bg-light.col-md-2
     h2 Add Guard
     form(method='post', action='/api/guard')
@@ -34,7 +34,7 @@ block content
           input(type='number', name='supervises').form-control
       div.form-group
         label Guards Locations
-          textarea(name='visited').form-control
+          textarea(name='guards').form-control
       div.form-group
           input(type='submit')
 
@@ -74,7 +74,7 @@ block content
 
   .container.bg-secondary.text-white.col-md-12
     h1 Guards
-    table.table.text-white#visitorTable
+    table.table.text-white#guardTable
       thead
         th Social Security Number
         th First Name

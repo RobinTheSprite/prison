@@ -4,7 +4,7 @@ var router = express.Router();
 const Guard = require('../models/Guard');
 
 //Read
-router.get('/guard', function(req, res, next) {
+router.get('/guard', function(req, res) {
     const query = req.query;
     Guard.model.find(query)
         .then(guard => {
@@ -85,7 +85,7 @@ router.post('/guard', (req, res) => {
     });
     delete body.addresses;
 
-    const guards = body.guards.split('\n');
+    const guards = body.guards.split(/[\r][\n]+/);
     delete body.guards;
 
     const guard = new Guard.model(body);
