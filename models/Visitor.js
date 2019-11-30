@@ -9,7 +9,7 @@ const visitor = {
     visited: {type: String}
 };
 
-visitorSchema = Object.assign(visitor, Person, NonPrisoner);
+const visitorSchema = Object.assign(visitor, Person, NonPrisoner);
 
 module.exports = {
     model: mongoose.model('Visitor', visitorSchema),
