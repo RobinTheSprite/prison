@@ -1,0 +1,88 @@
+extends layout
+
+block content
+  script(src='/scripts/getVisitors.js')
+  .container.bg-light.col-md-2
+    h2 Add Visitor
+    form(method='post', action='/api/visitor')
+      div.form-group
+          label Social Security Number
+            input(type='text', name='ssn', required=true).form-control
+      div.form-group
+          label First Name
+            input(type='text', name='firstName', required=true).form-control
+      div.form-group
+          label Middle Name
+            input(type='text', name='middleName', required=true).form-control
+      div.form-group
+          label Last Name
+            input(type='text', name='lastName', required=true).form-control
+      div.form-group
+          label Addresses
+            textarea(name='addresses', required=true).form-control
+      div.form-group
+          label Phone Number
+            input(type='phone', name='phone', required=true).form-control
+      div.form-group
+          label Date of Visit
+            input(type='date', name='visitDate').form-control
+      div.form-group
+          label Time In
+            input(type='time', name='timeIn').form-control
+      div.form-group
+        label Time Out
+          input(type='time', name='timeOut').form-control
+      div.form-group
+        label Visited Prisoner
+          input(type='text', name='visited').form-control
+      div.form-group
+          input(type='submit')
+
+  .container.bg-light.col-md-2
+    h2 Update Visitor
+    form(method='get', action='api/visitor/update')
+      div.form-group
+        label Social Security Number
+          input(type='text', name='ssn', required=true).form-control
+      div.form-group
+        label Field to Update
+          select(name='fieldToUpdate')
+            option(value='ssn') Social Security Number
+            option(value='firstName') First Name
+            option(value='middleName') Middle Name
+            option(value='lastName') Last Name
+            option(value='addresses') Address
+            option(value='phone') Phone Number
+            option(value='visitDate') Date of Visit
+            option(value='timeIn') Time In
+            option(value='timeOut') Time Out
+            option(value='visited') Visited Prisoner
+      div.form-group
+        label Value to Update
+          input(type='text', name='valueToUpdate')
+      div.form-group
+        input(type='submit')
+
+  .container.bg-light.col-md-2
+    h2 Delete Visitor
+    form(method='get', action='api/visitor/remove')
+      div.form-group
+        label Social Security Number
+          input(type='text', name='ssn', required=true).form-control
+      div.form-group
+        input(type='submit')
+
+  .container.bg-secondary.text-white.col-md-12
+    h1 Prior Visitors
+    table.table.text-white#visitorTable
+      thead
+        th Social Security Number
+        th First Name
+        th Middle Name
+        th Last Name
+        th Addresses
+        th Phone Number
+        th Date of Visit
+        th Time In
+        th Time Out
+        th Visited Prisoner
