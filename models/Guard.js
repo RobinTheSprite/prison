@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 const Person = require('./Person');
 const NonPrisoner = require('./NonPrisoner');
-
-const locations = ['A', 'B', 'C', 'S', 'Perimeter', 'Front Gate', 'Kitchen', 'Yard'];
+const Locations = require('./Locations');
 
 const guard = {
     salary: {type: Number, trim: true},
     shift: {type: String, trim: true},
-    guards: {type: [String], enum: locations, trim: true},
+    guards: {type: [String], enum: Locations, trim: true},
     supervises: {type: Number, trim: true}
 };
 
