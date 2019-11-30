@@ -5,7 +5,7 @@ function addCell(tr, val) {
     {
         td.style.overflow = 'auto';
         val.forEach((item) => {
-            if (!isNaN(Date.parse(item)))
+            if (!isNaN(Date.parse(item))) //Checks if the value is a Date
             {
                 item = item.split('T')[0];
             }

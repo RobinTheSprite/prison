@@ -6,9 +6,17 @@ function addCell(tr, val) {
         td.style.overflow = 'auto';
         val.forEach((item) => {
             delete item._id;
-            Object.values(item).forEach(itemVal => {
-                td.innerHTML += itemVal + ' ';
-            });
+            if (typeof item === 'object')
+            {
+                Object.values(item).forEach(itemVal => {
+                    td.innerHTML += itemVal + ' ';
+                });
+
+            }
+            else
+            {
+                td.innerHTML += item;
+            }
             td.innerHTML += '<br/>';
         })
     }
