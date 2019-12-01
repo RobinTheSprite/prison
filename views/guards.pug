@@ -2,75 +2,76 @@ extends layout
 
 block content
   script(src='/scripts/getGuards.js')
-  .container.bg-light.col-md-2
-    h2 Add Guard
-    form(method='post', action='/api/guard')
-      div.form-group
+  .container.row
+    .container.bg-light.col-md-3
+      h2 Add Guard
+      form(method='post', action='/api/guard')
+        div.form-group
+            label Social Security Number
+              input(type='text', name='ssn', required=true).form-control
+        div.form-group
+            label First Name
+              input(type='text', name='firstName', required=true).form-control
+        div.form-group
+            label Middle Name
+              input(type='text', name='middleName', required=true).form-control
+        div.form-group
+            label Last Name
+              input(type='text', name='lastName', required=true).form-control
+        div.form-group
+            label Addresses
+              textarea(name='addresses', required=true).form-control
+        div.form-group
+            label Phone Number
+              input(type='phone', name='phone', required=true).form-control
+        div.form-group
+            label Salary
+              input(type='number', step='any', name='salary').form-control
+        div.form-group
+            label Shift
+              input(type='time', name='shift').form-control
+        div.form-group
+          label Supervises Project
+            input(type='number', name='supervises').form-control
+        div.form-group
+          label Guards Locations
+            textarea(name='guards').form-control
+        div.form-group
+            input(type='submit')
+
+    .container.bg-light.col-md-3
+      h2 Update Visitor
+      form(method='get', action='api/guard/update')
+        div.form-group
           label Social Security Number
             input(type='text', name='ssn', required=true).form-control
-      div.form-group
-          label First Name
-            input(type='text', name='firstName', required=true).form-control
-      div.form-group
-          label Middle Name
-            input(type='text', name='middleName', required=true).form-control
-      div.form-group
-          label Last Name
-            input(type='text', name='lastName', required=true).form-control
-      div.form-group
-          label Addresses
-            textarea(name='addresses', required=true).form-control
-      div.form-group
-          label Phone Number
-            input(type='phone', name='phone', required=true).form-control
-      div.form-group
-          label Salary
-            input(type='number', step='any', name='salary').form-control
-      div.form-group
-          label Shift
-            input(type='time', name='shift').form-control
-      div.form-group
-        label Supervises Project
-          input(type='number', name='supervises').form-control
-      div.form-group
-        label Guards Locations
-          textarea(name='guards').form-control
-      div.form-group
+        div.form-group
+          label Field to Update
+            select(name='fieldToUpdate')
+              option(value='ssn') Social Security Number
+              option(value='firstName') First Name
+              option(value='middleName') Middle Name
+              option(value='lastName') Last Name
+              option(value='addresses') Address
+              option(value='phone') Phone Number
+              option(value='salary') Salary
+              option(value='shift') Shift
+              option(value='supervises') Supervises Project
+              option(value='guards') Guards Location
+        div.form-group
+          label Value to Update
+            input(type='text', name='valueToUpdate').form-control
+        div.form-group
           input(type='submit')
 
-  .container.bg-light.col-md-2
-    h2 Update Visitor
-    form(method='get', action='api/guard/update')
-      div.form-group
-        label Social Security Number
-          input(type='text', name='ssn', required=true).form-control
-      div.form-group
-        label Field to Update
-          select(name='fieldToUpdate')
-            option(value='ssn') Social Security Number
-            option(value='firstName') First Name
-            option(value='middleName') Middle Name
-            option(value='lastName') Last Name
-            option(value='addresses') Address
-            option(value='phone') Phone Number
-            option(value='salary') Salary
-            option(value='shift') Shift
-            option(value='supervises') Supervises Project
-            option(value='guards') Guards Location
-      div.form-group
-        label Value to Update
-          input(type='text', name='valueToUpdate')
-      div.form-group
-        input(type='submit')
-
-  .container.bg-light.col-md-2
-    h2 Delete Guard
-    form(method='get', action='api/guard/remove')
-      div.form-group
-        label Social Security Number
-          input(type='text', name='ssn', required=true).form-control
-      div.form-group
-        input(type='submit')
+    .container.bg-light.col-md-3
+      h2 Delete Guard
+      form(method='get', action='api/guard/remove')
+        div.form-group
+          label Social Security Number
+            input(type='text', name='ssn', required=true).form-control
+        div.form-group
+          input(type='submit')
 
   .container.bg-secondary.text-white.col-md-12
     h1 Guards

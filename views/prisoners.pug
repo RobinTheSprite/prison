@@ -2,72 +2,77 @@ extends layout
 
 block content
   script(src='/scripts/getPrisoners.js')
-  .container.bg-light.col-md-2
-    h2 Add Prisoner
-    form(method='post', action='/api/prisoner')
-      div.form-group
+  .container.row
+    .container.bg-light.col-md-3
+      h2 Add Prisoner
+      form(method='post', action='/api/prisoner')
+        div.form-group
+            label Social Security Number
+              input(type='text', name='ssn', required=true).form-control
+        div.form-group
+            label First Name
+              input(type='text', name='firstName', required=true).form-control
+        div.form-group
+            label Middle Name
+              input(type='text', name='middleName', required=true).form-control
+        div.form-group
+            label Last Name
+              input(type='text', name='lastName', required=true).form-control
+        div.form-group
+            label Crime(s) Committed
+              textarea(name='crimes', required=true).form-control
+        div.form-group
+          label Security Clearance
+            input(type='text', name='clearance', required=true).form-control
+        div.form-group
+            label Cell Location
+              input(type='text', name='cellLocation', required=true).form-control
+        div.form-group
+            label Date of Admission
+              input(type='date', name='admitDate', required=true).form-control
+        div.form-group
+            label Date of Release
+              input(type='date', name='releaseDate').form-control
+        div.form-group
+            label Court Dates
+              textarea(name='courtDates').form-control
+        div.form-group
+            input(type='submit')
+
+    .container.bg-light.col-md-3
+      h2 Update Prisoner
+      form(method='get', action='api/prisoner/update')
+        div.form-group
           label Social Security Number
             input(type='text', name='ssn', required=true).form-control
-      div.form-group
-          label First Name
-            input(type='text', name='firstName', required=true).form-control
-      div.form-group
-          label Middle Name
-            input(type='text', name='middleName', required=true).form-control
-      div.form-group
-          label Last Name
-            input(type='text', name='lastName', required=true).form-control
-      div.form-group
-          label Crime(s) Committed
-            textarea(name='crimes', required=true).form-control
-      div.form-group
-        label Security Clearance
-          input(type='text', name='clearance', required=true).form-control
-      div.form-group
-          label Date of Admission
-            input(type='date', name='admitDate', required=true).form-control
-      div.form-group
-          label Date of Release
-            input(type='date', name='releaseDate').form-control
-      div.form-group
-          label Court Dates
-            textarea(name='courtDates').form-control
-      div.form-group
+        div.form-group
+          label Field to Update
+            select(name='fieldToUpdate')
+              option(value='ssn') Social Security Number
+              option(value='firstName') First Name
+              option(value='middleName') Middle Name
+              option(value='lastName') Last Name
+              option(value='crimes') Crime
+              option(value='clearance') Security Clearance
+              option(value='cellLocation') Cell Location
+              option(value='admitDate') Admission Date
+              option(value='releaseDate') Release Date
+              option(value='courtDates') Court Date
+        div.form-group
+          label Value to Update
+            input(type='text', name='valueToUpdate').form-control
+        div.form-group
           input(type='submit')
 
-  .container.bg-light.col-md-2
-    h2 Update Prisoner
-    form(method='get', action='api/prisoner/update')
-      div.form-group
-        label Social Security Number
-          input(type='text', name='ssn', required=true).form-control
-      div.form-group
-        label Field to Update
-          select(name='fieldToUpdate')
-            option(value='ssn') Social Security Number
-            option(value='firstName') First Name
-            option(value='middleName') Middle Name
-            option(value='lastName') Last Name
-            option(value='crimes') Crime
-            option(value='clearance') Security Clearance
-            option(value='admitDate') Admission Date
-            option(value='releaseDate') Release Date
-            option(value='courtDates') Court Date
-      div.form-group
-        label Value to Update
-          input(type='text', name='valueToUpdate')
-      div.form-group
-        input(type='submit')
-
-  .container.bg-light.col-md-2
-    h2 Delete Prisoner
-    form(method='get', action='api/prisoner/remove')
-      div.form-group
-        label Social Security Number
-          input(type='text', name='ssn', required=true).form-control
-      div.form-group
-        input(type='submit')
-
+    .container.bg-light.col-md-3
+      h2 Delete Prisoner
+      form(method='get', action='api/prisoner/remove')
+        div.form-group
+          label Social Security Number
+            input(type='text', name='ssn', required=true).form-control
+        div.form-group
+          input(type='submit')
+  br
   .container.bg-secondary.text-white.col-md-12
     h1 Current Prisoners
     table.table.text-white#prisonerTable
@@ -78,6 +83,7 @@ block content
         th Last Name
         th Crime(s)
         th Clearance
+        th Cell Location
         th Admitted
         th Released
         th Court Dates
