@@ -5,7 +5,11 @@ function addCell(tr, val) {
     {
         td.style.overflow = 'auto';
         val.forEach((item) => {
-            td.innerHTML += item + '<br/>';
+            delete item._id;
+            Object.values(item).forEach(itemVal => {
+                td.innerHTML += itemVal + ' ';
+            });
+            td.innerHTML += '<br/>';
         })
     }
     else
@@ -23,10 +27,12 @@ function addRow(tbl, data) {
     addCell(tr, data.firstName);
     addCell(tr, data.middleName);
     addCell(tr, data.lastName);
-    addCell(tr, data.crimes);
-    addCell(tr, data.admitDate);
-    addCell(tr, data.releaseDate);
-    addCell(tr, data.courtDates);
+    addCell(tr, data.addresses);
+    addCell(tr, data.phone);
+    addCell(tr, data.visitDate.split('T')[0]);
+    addCell(tr, data.timeIn);
+    addCell(tr, data.timeOut);
+    addCell(tr, data.visited);
 
     tbl.appendChild(tr)
 }
@@ -35,12 +41,12 @@ function addRow(tbl, data) {
 var request = new XMLHttpRequest();
 
 // Open a new connection, using the GET request on the URL endpoint
-request.open('GET', 'http://localhost:3000/api/prisoner', true);
+request.open('GET', 'http://localhost:3000/api/visitor', true);
 
 request.onload = function () {
     const response = JSON.parse(this.response);
     response.data.forEach((row) => {
-        addRow(document.getElementById('prisonerTable'), row);
+        addRow(document.getElementById('visitorTable'), row);
     })
 };
 

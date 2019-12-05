@@ -6,10 +6,11 @@ const prisoner = {
     admitDate: {type: Date},
     releaseDate: {type: Date},
     clearance: {type: String},
+    cellLocation: {type: String, trim: true},
     courtDates: {type: [Date]}
 };
 
-const personPrisoner = Object.assign(Person, prisoner);
+const personPrisoner = Object.assign(prisoner, Person);
 
 const prisonerSchema = mongoose.Schema(personPrisoner);
 
