@@ -9,6 +9,7 @@ var pageRouter = require('./routes/pages');
 const prisonerRouter = require('./routes/prisoner');
 const visitorRouter = require('./routes/visitor');
 const guardRouter = require('./routes/guard');
+const programRouter = require('./routes/program');
 
 var url = 'mongodb://localhost:27017/prison';
 mongoose.connect(url, {
@@ -33,6 +34,7 @@ app.use('/', pageRouter);
 app.use('/api', prisonerRouter);
 app.use('/api', visitorRouter);
 app.use('/api', guardRouter);
+app.use('/api', programRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

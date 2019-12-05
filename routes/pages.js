@@ -13,6 +13,10 @@ router.get('/guards', (req, res) => {
   res.render('guards', {title: 'Guards'});
 });
 
+router.get('/programs', (req, res) => {
+  res.render('programs', {title: 'Programs'});
+});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Underwood State Penitentiary' });

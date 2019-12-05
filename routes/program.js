@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const Prisoner = require('models/Prisoner');
-const Guard = require('models/Guard');
-const Program = require('models/Program');
+const Prisoner = require('../models/Prisoner');
+const Guard = require('../models/Guard');
+const Program = require('../models/Program');
 
 //Read
 router.get('/program', function(req, res, next) {
