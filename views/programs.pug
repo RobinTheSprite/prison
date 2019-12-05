@@ -1,0 +1,54 @@
+extends layout
+
+block content
+  //script(src='/scripts/getGuards.js')
+  .container.row
+    .container.bg-light.col-md-3
+      h2 Add Program
+      form(method='post', action='/api/program')
+        div.form-group
+            label Program Name
+              input(type='text', name='name', required=true).form-control
+        div.form-group
+            label Supervisor
+              input(type='text', name='supervisor', required=true).form-control
+        div.form-group
+            label Workers
+              textarea(name='workers', required=true).form-control
+        div.form-group
+            input(type='submit')
+
+    .container.bg-light.col-md-3
+      h2 Update Program
+      form(method='get', action='api/program/update')
+        div.form-group
+          label Program Name
+            input(type='text', name='name', required=true).form-control
+        div.form-group
+          label Field to Update
+            select(name='fieldToUpdate')
+              option(value='name') Program Name
+              option(value='supervisor') Supervisor
+              option(value='workers') Workers
+        div.form-group
+          label Value to Update
+            input(type='text', name='valueToUpdate').form-control
+        div.form-group
+          input(type='submit')
+
+    .container.bg-light.col-md-3
+      h2 Delete Program
+      form(method='get', action='api/program/remove')
+        div.form-group
+          label Program Name
+            input(type='text', name='name', required=true).form-control
+        div.form-group
+          input(type='submit')
+
+  .container.bg-secondary.text-white.col-md-12
+    h1 Programs
+    table.table.text-white#programTable
+      thead
+        th Name
+        th Supervisor
+        th Workers
