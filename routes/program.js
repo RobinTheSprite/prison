@@ -72,66 +72,21 @@ router.get('/program/remove', (req, res) => {
                             confirmation: 'fail',
                             message: err.message
                         })
-            });
+                    });
 
-            Guard.model.findByIdAndRemove(data.supervisor)
-                .catch(err => {
-                    res.json({
-                        confirmation: 'fail',
-                        message: err.message
-                    })
-                });
+                Guard.model.findByIdAndRemove(data.supervisor)
+                    .catch(err => {
+                        res.json({
+                            confirmation: 'fail',
+                            message: err.message
+                        })
+                    });
 
-            res.json({
-                confirmation: 'success',
-                data: 'Program with name ' + query.name + ' has been removed'
-            })
-        })
-        .catch(err => {
-            res.json({
-                confirmation: 'fail',
-                message: err.message
-            })
-        })
-});
-
-//Create
-router.post('/program', (req, res) => {
-    const body = req.body;
-    const workers = body.workers.split(/[\r][\n]+/);
-
-    const program = new Program(body);
-
-    workers.forEach((worker) => {
-        Prisoner.model.findOne({ssn: worker})
-            .then(prisoner => {
-                program.workers.push(prisoner._id);
-            })
-            .catch(err => {
                 res.json({
-                    confirmation: 'fail',
-                    message: err.message
+                    confirmation: 'success',
+                    data: 'Program with name ' + query.name + ' has been removed'
                 })
             })
-    });
-
-    Guard.model.findOne({ssn: body.supervisor})
-        .then(guard => {
-            program.supervisor = guard._id;
-
-            Program.model.create(program)
-                .then(program => {
-                    res.json({
-                        confirmation: 'success',
-                        data: program
-                    })
-                })
-                .catch(err => {
-                    res.json({
-                        confirmation: 'fail',
-                        message: err.message
-                    })
-                })
         })
         .catch(err => {
             res.json({
@@ -140,5 +95,51 @@ router.post('/program', (req, res) => {
             })
         });
 });
+
+//Create
+    router.post('/program', (req, res) => {
+        const body = req.body;
+        const workers = body.workers.split(/[\r][\n]+/);
+
+        const program = new Program(body);
+
+        workers.forEach((worker) => {
+            Prisoner.model.findOne({ssn: worker})
+                .then(prisoner => {
+                    program.workers.push(prisoner._id);
+                })
+                .catch(err => {
+                    res.json({
+                        confirmation: 'fail',
+                        message: err.message
+                    })
+                })
+        });
+
+        Guard.model.findOne({ssn: body.supervisor})
+            .then(guard => {
+                program.supervisor = guard._id;
+
+                Program.model.create(program)
+                    .then(program => {
+                        res.json({
+                            confirmation: 'success',
+                            data: program
+                        })
+                    })
+                    .catch(err => {
+                        res.json({
+                            confirmation: 'fail',
+                            message: err.message
+                        })
+                    })
+            })
+            .catch(err => {
+                res.json({
+                    confirmation: 'fail',
+                    message: err.message
+                })
+            });
+    });
 
 module.exports = router;
