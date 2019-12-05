@@ -39,6 +39,7 @@ block content
         div.form-group
             input(type='submit')
 
+
     .container.bg-light.col-md-3
       h2 Update Prisoner
       form(method='get', action='api/prisoner/update')
@@ -52,17 +53,35 @@ block content
               option(value='firstName') First Name
               option(value='middleName') Middle Name
               option(value='lastName') Last Name
-              option(value='crimes') Crime
+              option(value='crimes') Crimes
               option(value='clearance') Security Clearance
               option(value='cellLocation') Cell Location
               option(value='admitDate') Admission Date
               option(value='releaseDate') Release Date
               option(value='courtDates') Court Date
         div.form-group
-          label Value to Update
-            input(type='text', name='valueToUpdate').form-control
+          label Value(s) to Update
+            textarea(name='valueToUpdate').form-control
         div.form-group
           input(type='submit')
+      br
+      h2 Add
+      form(method='get' action='api/prisoner/add')
+        div.form-group
+          label Social Security Number
+            input(type='text', name='ssn', required=true).form-control
+        div.form-group
+          label Field to Update
+            br
+            select(name='fieldToUpdate')
+              option(value='crimes') Crimes
+              option(value='courtDates') Court Date
+        div.form-group
+          label Value(s) to Update
+            textarea(name='valueToUpdate').form-control
+        div.form-group
+          input(type='submit')
+
 
     .container.bg-light.col-md-3
       h2 Delete Prisoner

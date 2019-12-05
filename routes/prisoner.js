@@ -28,6 +28,35 @@ router.get('/prisoner/update', (req, res) => {
 
     if (query.fieldToUpdate === "crimes" || query.fieldToUpdate === "courtDates")
     {
+        update[query.fieldToUpdate] = query.valueToUpdate.split(/[\r][\n]+/);
+    }
+    else
+    {
+        update[query.fieldToUpdate] = query.valueToUpdate;
+    }
+
+    Prisoner.model.findOneAndUpdate({ssn: query.ssn}, update)
+        .then(prisoner => {
+            res.json({
+                confirmation: 'success',
+                data: prisoner
+            })
+        })
+        .catch(err => {
+            res.json({
+                confirmation: 'fail',
+                message: err.message
+            })
+        })
+});
+
+//Add
+router.get('/prisoner/add', (req, res) => {
+    const query = req.query;
+    var update = {};
+
+    if (query.fieldToUpdate === "crimes" || query.fieldToUpdate === "courtDates")
+    {
         const temp = {};
         temp[query.fieldToUpdate] = query.valueToUpdate;
         update["$push"] = temp;
