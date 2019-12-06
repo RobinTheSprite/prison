@@ -7,7 +7,7 @@ const guard = {
     salary: {type: Number, trim: true},
     shift: {type: String, trim: true},
     guards: {type: [String], enum: Locations, trim: true},
-    supervises: {type: Number, trim: true}
+    supervises: {type: String, trim: true}
 };
 
 const guardSchema = Object.assign(guard, NonPrisoner, Person);

@@ -63,10 +63,10 @@ router.get('/program/update', (req, res) => {
 
 //Delete
 router.get('/program/remove', (req, res) => {
-    Program.model.findOneAndRemove({name: req.query.name})
+    Program.findOne({name: req.query.name})
         .then(data => {
             data.workers.forEach(worker => {
-                Prisoner.model.findByIdAndUpdate(worker, {worksOn: null})
+                Prisoner.model.findOneAndUpdate({ssn: worker}, {worksOn: null})
                     .catch(err => {
                         res.json({
                             confirmation: 'fail',
@@ -74,7 +74,15 @@ router.get('/program/remove', (req, res) => {
                         })
                     });
 
-                Guard.model.findByIdAndRemove(data.supervisor)
+                Guard.model.findOneAndUpdate({ssn: data.supervisor}, {supervises: null})
+                    .catch(err => {
+                        res.json({
+                            confirmation: 'fail',
+                            message: err.message
+                        })
+                    });
+
+                Program.findOneAndRemove({name: data.name})
                     .catch(err => {
                         res.json({
                             confirmation: 'fail',
@@ -107,7 +115,14 @@ router.get('/program/remove', (req, res) => {
         workers.forEach((worker) => {
             Prisoner.model.findOne({ssn: worker})
                 .then(prisoner => {
-                    program.workers.push(prisoner._id);
+                    program.workers.push(prisoner.ssn);
+                    Prisoner.model.findOneAndUpdate({ssn: prisoner.ssn}, {worksOn: body.name})
+                        .catch(err => {
+                            res.json({
+                                confirmation: 'fail',
+                                message: err.message
+                            })
+                        })
                 })
                 .catch(err => {
                     res.json({
@@ -119,7 +134,15 @@ router.get('/program/remove', (req, res) => {
 
         Guard.model.findOne({ssn: body.supervisor})
             .then(guard => {
-                program.supervisor = guard._id;
+                program.supervisor = guard.ssn;
+
+                Guard.model.findOneAndUpdate({ssn: guard.ssn}, {supervises: body.name})
+                    .catch(err => {
+                        res.json({
+                            confirmation: 'fail',
+                            message: err.message
+                        })
+                    });
 
                 Program.create(program)
                     .then(program => {
