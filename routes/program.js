@@ -7,7 +7,7 @@ const Program = require('../models/Program');
 //Read
 router.get('/program', function(req, res, next) {
     const query = req.query;
-    Program.model.find(query)
+    Program.find(query)
         .then(program => {
             res.json({
                 confirmation: 'success',
@@ -46,7 +46,7 @@ router.get('/program/update', (req, res) => {
         update[query.fieldToUpdate] = query.valueToUpdate;
     }
 
-    Program.model.findOneAndUpdate({name: query.name}, update)
+    Program.findOneAndUpdate({name: query.name}, update)
         .then(program => {
             res.json({
                 confirmation: 'success',
