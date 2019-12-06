@@ -101,7 +101,8 @@ router.get('/program/remove', (req, res) => {
         const body = req.body;
         const workers = body.workers.split(/[\r][\n]+/);
 
-        const program = new Program(body);
+        const program = new Program();
+        program.name = body.name;
 
         workers.forEach((worker) => {
             Prisoner.model.findOne({ssn: worker})
@@ -120,7 +121,7 @@ router.get('/program/remove', (req, res) => {
             .then(guard => {
                 program.supervisor = guard._id;
 
-                Program.model.create(program)
+                Program.create(program)
                     .then(program => {
                         res.json({
                             confirmation: 'success',
