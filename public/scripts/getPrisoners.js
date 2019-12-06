@@ -29,6 +29,7 @@ function addRow(tbl, data) {
     addCell(tr, data.lastName);
     addCell(tr, data.crimes);
     addCell(tr, data.clearance);
+    addCell(tr, data.worksOn);
     addCell(tr, data.cellLocation);
     addCell(tr, data.admitDate.split('T')[0]);
 
