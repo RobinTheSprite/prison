@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
 
 const personSchema = {
-   ssn: {type: String, trim: true, maxlength: 9},
+   ssn: {type: String, trim: true, maxlength: 9, index: true},
    firstName: {type: String},
    middleName: {type: String},
    lastName: {type: String},
