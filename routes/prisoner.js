@@ -83,7 +83,8 @@ router.get('/prisoner/add', (req, res) => {
 
 //Delete
 router.get('/prisoner/remove', (req, res) => {
-    Prisoner.model.findOneAndRemove({ssn: req.query.ssn})
+    const query = req.query;
+    Prisoner.model.findOneAndRemove({ssn: query.ssn})
         .then(data => {
             res.json({
                 confirmation: 'success',

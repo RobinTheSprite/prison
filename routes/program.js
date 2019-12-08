@@ -63,7 +63,8 @@ router.get('/program/update', (req, res) => {
 
 //Delete
 router.get('/program/remove', (req, res) => {
-    Program.findOne({name: req.query.name})
+    const query = req.query;
+    Program.findOne({name: query.name})
         .then(data => {
             data.workers.forEach(worker => {
                 Prisoner.model.findOneAndUpdate({ssn: worker}, {worksOn: null})

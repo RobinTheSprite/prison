@@ -55,7 +55,8 @@ router.get('/visitor/update', (req, res) => {
 
 //Delete
 router.get('/visitor/remove', (req, res) => {
-    Visitor.model.findOneAndRemove({ssn: req.query.ssn})
+    const query = req.query;
+    Visitor.model.findOneAndRemove({ssn: query.ssn})
         .then(data => {
             res.json({
                 confirmation: 'success',

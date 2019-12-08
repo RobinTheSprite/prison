@@ -2,6 +2,16 @@ extends layout
 
 block content
   script(src='/scripts/getPrisoners.js')
+  .row.justify-content-center
+    h1(onclick="window.location.href= 'http://localhost:3000'") Underwood State Penitentiary
+  .row.justify-content-center
+    .col-6.bg-secondary.p-2.rounded.text-center
+      button(onclick="window.location.href= 'http://localhost:3000/prisoners'").mx-3.rounded Prisoners
+      button(onclick="window.location.href= 'http://localhost:3000/visitors'").mx-3.rounded Visitors
+      button(onclick="window.location.href= 'http://localhost:3000/guards'").mx-3.rounded Guards
+      button(onclick="window.location.href= 'http://localhost:3000/programs'").mx-3.rounded Work Programs
+  br
+  br
   .container.row
     .container.bg-light.col-md-3
       h2 Add Prisoner
@@ -65,16 +75,16 @@ block content
         div.form-group
           input(type='submit')
       br
-      h2 Add
+      h4 Add Crime/Court Date
       form(method='get' action='api/prisoner/add')
         div.form-group
           label Social Security Number
             input(type='text', name='ssn', required=true).form-control
         div.form-group
-          label Field to Update
+          label Field to Add
             br
             select(name='fieldToUpdate')
-              option(value='crimes') Crimes
+              option(value='crimes') Crime
               option(value='courtDates') Court Date
         div.form-group
           label Value(s) to Update
@@ -102,8 +112,8 @@ block content
         th Last Name
         th Crime(s)
         th Clearance
-        th Work Project
-        th Cell Location
+        th Work Program
+        th Cell Block
         th Admitted
         th Released
         th Court Dates

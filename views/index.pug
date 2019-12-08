@@ -1,4 +1,13 @@
 extends layout
 
 block content
-  h1 Index
+    .row.justify-content-center
+      h1 Underwood State Penitentiary
+    .row.justify-content-center
+      .col-6.bg-secondary.p-2.rounded.text-center
+        button(onclick="window.location.href= 'http://localhost:3000/prisoners'").mx-3.rounded Prisoners
+        button(onclick="window.location.href= 'http://localhost:3000/visitors'").mx-3.rounded Visitors
+        button(onclick="window.location.href= 'http://localhost:3000/guards'").mx-3.rounded Guards
+        button(onclick="window.location.href= 'http://localhost:3000/programs'").mx-3.rounded Work Programs
+
+

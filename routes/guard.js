@@ -54,7 +54,8 @@ router.get('/guard/update', (req, res) => {
 
 //Delete
 router.get('/guard/remove', (req, res) => {
-    Guard.model.findOneAndRemove({ssn: req.query.ssn})
+    const query = req.query;
+    Guard.model.findOneAndRemove({ssn: query.ssn})
         .then(() => {
             res.json({
                 confirmation: 'success',
