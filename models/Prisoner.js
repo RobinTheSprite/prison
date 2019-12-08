@@ -8,7 +8,7 @@ const prisoner = {
     clearance: {type: String},
     cellLocation: {type: String, trim: true},
     courtDates: {type: [Date]},
-    worksOn: {type: String}
+    worksOn: {type: String, default: null}
 };
 
 const personPrisoner = Object.assign(prisoner, Person);
