@@ -41,6 +41,27 @@ router.get('/program/update', (req, res) => {
         temp[query.fieldToUpdate] = query.valueToUpdate;
         update["$push"] = temp;
     }
+    else if (query.fieldToUpdate === "supervisor")
+    {
+        Program.findOne({name: query.name})
+            .then(program => {
+                Guard.model.findOneAndUpdate({ssn: program.supervisor}, {supervises: null})
+                    .catch(err => {
+                        res.json({
+                            confirmation: 'fail',
+                            message: err.message
+                        })
+                    });
+                Guard.model.findOneAndUpdate({ssn: query.valueToUpdate}, {supervises: query.name})
+                    .catch(err => {
+                        res.json({
+                            confirmation: 'fail',
+                            message: err.message
+                        })
+                    });
+            });
+        update[query.fieldToUpdate] = query.valueToUpdate;
+    }
     else
     {
         update[query.fieldToUpdate] = query.valueToUpdate;
@@ -65,8 +86,8 @@ router.get('/program/update', (req, res) => {
 router.get('/program/remove', (req, res) => {
     const query = req.query;
     Program.findOne({name: query.name})
-        .then(data => {
-            data.workers.forEach(worker => {
+        .then(program => {
+            program.workers.forEach(worker => {
                 Prisoner.model.findOneAndUpdate({ssn: worker}, {worksOn: null})
                     .catch(err => {
                         res.json({
@@ -74,27 +95,26 @@ router.get('/program/remove', (req, res) => {
                             message: err.message
                         })
                     });
+            });
+            Guard.model.findOneAndUpdate({ssn: program.supervisor}, {supervises: null})
+                .catch(err => {
+                    res.json({
+                        confirmation: 'fail',
+                        message: err.message
+                    })
+                });
 
-                Guard.model.findOneAndUpdate({ssn: data.supervisor}, {supervises: null})
-                    .catch(err => {
-                        res.json({
-                            confirmation: 'fail',
-                            message: err.message
-                        })
-                    });
+            Program.findOneAndRemove({name: program.name})
+                .catch(err => {
+                    res.json({
+                        confirmation: 'fail',
+                        message: err.message
+                    })
+                });
 
-                Program.findOneAndRemove({name: data.name})
-                    .catch(err => {
-                        res.json({
-                            confirmation: 'fail',
-                            message: err.message
-                        })
-                    });
-
-                res.json({
-                    confirmation: 'success',
-                    data: 'Program with name ' + query.name + ' has been removed'
-                })
+            res.json({
+                confirmation: 'success',
+                data: 'Program with name ' + query.name + ' has been removed'
             })
         })
         .catch(err => {
