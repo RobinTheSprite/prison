@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  script(src='/scripts/getPrograms.js')
+  .row.justify-content-center
+    h1(onclick="window.location.href= 'http://localhost:3000'") Underwood State Penitentiary
+  .row.justify-content-center
+    .col-6.bg-secondary.p-2.rounded.text-center
+      button(onclick="window.location.href= 'http://localhost:3000/prisoners'").mx-3.rounded Prisoners
+      button(onclick="window.location.href= 'http://localhost:3000/visitors'").mx-3.rounded Visitors
+      button(onclick="window.location.href= 'http://localhost:3000/guards'").mx-3.rounded Guards
+      button(onclick="window.location.href= 'http://localhost:3000/programs'").mx-3.rounded Work Programs
+  br
+  br
+  .container.row
+    .container.bg-light.col-md-3
+      h2 Add Incident
+      form(method='post', action='/api/incident')
+        div.form-group
+            label Incident Type
+              input(type='text', name='type', required=true).form-control
+        div.form-group
+            label Date
+              input(type='text', name='date', required=true).form-control
+        div.form-group
+            label People Involved
+              textarea(name='peopleInvolved', required=true).form-control
+        div.form-group
+            input(type='submit')
+
+    .container.bg-light.col-md-3
+      h2 Update Incident
+      form(method='get', action='api/incident/update')
+        div.form-group
+          label Program Id
+            input(type='text', name='id', required=true).form-control
+        div.form-group
+          label Field to Update
+            select(name='fieldToUpdate').form-control
+              option(value='type') Type
+              option(value='date') Date
+              option(value='peopleInvolved') People Involved
+        div.form-group
+          label Value to Update
+            input(type='text', name='valueToUpdate').form-control
+        div.form-group
+          input(type='submit')
+
+    .container.bg-light.col-md-3
+      h2 Delete Incident
+      form(method='get', action='api/incident/remove')
+        div.form-group
+          label Incident Id
+            input(type='text', name='id', required=true).form-control
+        div.form-group
+          input(type='submit')
+
+  .container.bg-secondary.text-white.col-md-12
+    h1 Incidents
+    table.table.text-white#incidentTable
+      thead
+        th Id
+        th Type
+        th Date
+        th People Involved
