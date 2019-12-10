@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const Incident = require('../models/Incident');
+const Prisoner = require('../models/Prisoner');
 
 //Read
 router.get('/incident', function(req, res) {
@@ -70,6 +71,7 @@ router.get('/incident/remove', (req, res) => {
         })
 });
 
+let counter = 0;
 //Create
 router.post('/incident', (req, res) => {
     const body = req.body;
@@ -77,22 +79,48 @@ router.post('/incident', (req, res) => {
     const peopleInvolved = body.peopleInvolved.split(/[\r][\n]+/);
     delete body.peopleInvolved;
 
-    const incident = new Incident.model(body);
-    incident.guards = peopleInvolved;
+    async function checkPrisoners() {
+        let found = 0;
+        for (const person of peopleInvolved) {
+           await Prisoner.model.findOne({ssn: person})
+                .then(prisoner => {
+                    if (prisoner !== null) {
+                        ++found;
+                    }
+                });
+        }
+        return found;
+    }
 
-    Incident.model.create(incident)
-        .then(incident => {
-            res.json({
-                confirmation: 'success',
-                data: incident
-            })
+    checkPrisoners()
+        .then((found) => {
+            if (found === peopleInvolved.length) {
+                const incident = new Incident.model(body);
+                incident.peopleInvolved = peopleInvolved;
+                incident.id = counter++;
+
+                Incident.model.create(incident)
+                    .then(incident => {
+                        res.json({
+                            confirmation: 'success',
+                            data: incident
+                        })
+                    })
+                    .catch(err => {
+                        res.json({
+                            confirmation: 'fail',
+                            message: err.message
+                        })
+                    });
+            }
+            else
+            {
+                res.json({
+                    confirmation: 'fail',
+                    message: 'Not all of the people involved are prisoners'
+                })
+            }
         })
-        .catch(err => {
-            res.json({
-                confirmation: 'fail',
-                message: err.message
-            })
-        });
 });
 
 module.exports = router;
