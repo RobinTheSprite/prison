@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  script(src='/scripts/getPrograms.js')
+  script(src='/scripts/getIncidents.js')
   .row.justify-content-center
     h1(onclick="window.location.href= 'http://localhost:3000'") Underwood State Penitentiary
   .row.justify-content-center
@@ -21,7 +21,7 @@ block content
               input(type='text', name='type', required=true).form-control
         div.form-group
             label Date
-              input(type='text', name='date', required=true).form-control
+              input(type='date', name='date', required=true).form-control
         div.form-group
             label People Involved
               textarea(name='peopleInvolved', required=true).form-control
