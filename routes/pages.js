@@ -1,24 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/visitors', (req, res) => {
-  res.render('visitors', {title: 'Visitors'});
-});
+const pages = ['visitors', 'prisoners', 'guards', 'programs', 'incidents'];
 
-router.get('/prisoners', (req, res) => {
-  res.render('prisoners', {title: 'Prisoners'});
-});
-
-router.get('/guards', (req, res) => {
-  res.render('guards', {title: 'Guards'});
-});
-
-router.get('/programs', (req, res) => {
-  res.render('programs', {title: 'Programs'});
+pages.forEach(page => {
+  router.get('/' + page, (req, res) => {
+    res.render(page, {title: page.replace(/^\w/, c => c.toUpperCase())})
+  })
 });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('index', { title: 'Underwood State Penitentiary' });
 });
 
