@@ -5,11 +5,18 @@ function addCell(tr, val) {
     {
         td.style.overflow = 'auto';
         val.forEach((item) => {
-            if (!isNaN(Date.parse(item))) //Checks if the value is a Date
+            delete item._id;
+            if (typeof item === 'object')
             {
-                item = item.split('T')[0];
+                Object.values(item).forEach(itemVal => {
+                    td.innerHTML += itemVal + ' ';
+                });
             }
-            td.innerHTML += item + '<br/>';
+            else
+            {
+                td.innerHTML += item;
+            }
+            td.innerHTML += '<br/>';
         })
     }
     else

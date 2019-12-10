@@ -11,7 +11,6 @@ function addCell(tr, val) {
                 Object.values(item).forEach(itemVal => {
                     td.innerHTML += itemVal + ' ';
                 });
-
             }
             else
             {
