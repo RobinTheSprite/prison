@@ -10,6 +10,7 @@ const prisonerRouter = require('./routes/prisoner');
 const visitorRouter = require('./routes/visitor');
 const guardRouter = require('./routes/guard');
 const programRouter = require('./routes/program');
+const incidentRouter = require('./routes/incident');
 
 var url = 'mongodb://localhost:27017/prison';
 mongoose.connect(url, {
@@ -35,6 +36,7 @@ app.use('/api', prisonerRouter);
 app.use('/api', visitorRouter);
 app.use('/api', guardRouter);
 app.use('/api', programRouter);
+app.use('/api', incidentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,7 +44,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
