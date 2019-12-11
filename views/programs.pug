@@ -17,14 +17,17 @@ block content
       h2 Add Program
       form(method='post', action='/api/program')
         div.form-group
-            label Program Name
-              input(type='text', name='name', required=true).form-control
+          label Program Name
+            input(type='text', name='name', required=true).form-control
         div.form-group
-            label Supervisor
-              input(type='text', name='supervisor', required=true).form-control
+          label Security Clearance
+            input(name='clearance', required=true).form-control
         div.form-group
-            label Workers
-              textarea(name='workers', required=true).form-control
+          label Supervisor
+            input(type='text', name='supervisor', required=true).form-control
+        div.form-group
+          label Workers
+            textarea(name='workers', required=true).form-control
         div.form-group
             input(type='submit')
 
@@ -38,6 +41,7 @@ block content
           label Field to Update
             select(name='fieldToUpdate').form-control
               option(value='name') Program Name
+              option(value='clearance') Security Clearance
               option(value='supervisor') Supervisor
               option(value='workers') Workers
         div.form-group
@@ -60,5 +64,6 @@ block content
     table.table.text-white#programTable
       thead
         th Name
+        th Security Clearance
         th Supervisor
         th Workers

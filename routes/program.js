@@ -5,7 +5,7 @@ const Guard = require('../models/Guard');
 const Program = require('../models/Program');
 
 //Read
-router.get('/program', function(req, res, next) {
+router.get('/program', function(req, res) {
     const query = req.query;
     Program.find(query)
         .then(program => {
@@ -126,52 +126,18 @@ router.get('/program/remove', (req, res) => {
 });
 
 //Create
-    router.post('/program', (req, res) => {
-        const body = req.body;
-        const workers = body.workers.split(/[\r][\n]+/);
+router.post('/program', (req, res) => {
+    const body = req.body;
+    const workers = body.workers.split(/[\r][\n]+/);
 
-        const program = new Program();
-        program.name = body.name;
+    const program = new Program();
+    program.name = body.name;
 
-        workers.forEach((worker) => {
-            Prisoner.model.findOne({ssn: worker})
-                .then(prisoner => {
-                    program.workers.push(prisoner.ssn);
-                    Prisoner.model.findOneAndUpdate({ssn: prisoner.ssn}, {worksOn: body.name})
-                        .catch(err => {
-                            res.json({
-                                confirmation: 'fail',
-                                message: err.message
-                            })
-                        })
-                })
-                .catch(err => {
-                    res.json({
-                        confirmation: 'fail',
-                        message: err.message
-                    })
-                })
-        });
-
-        Guard.model.findOne({ssn: body.supervisor})
-            .then(guard => {
-                program.supervisor = guard.ssn;
-
-                Guard.model.findOneAndUpdate({ssn: guard.ssn}, {supervises: body.name})
-                    .catch(err => {
-                        res.json({
-                            confirmation: 'fail',
-                            message: err.message
-                        })
-                    });
-
-                Program.create(program)
-                    .then(program => {
-                        res.json({
-                            confirmation: 'success',
-                            data: program
-                        })
-                    })
+    workers.forEach((worker) => {
+        Prisoner.model.findOne({ssn: worker})
+            .then(prisoner => {
+                program.workers.push(prisoner.ssn);
+                Prisoner.model.findOneAndUpdate({ssn: prisoner.ssn}, {worksOn: body.name})
                     .catch(err => {
                         res.json({
                             confirmation: 'fail',
@@ -184,7 +150,41 @@ router.get('/program/remove', (req, res) => {
                     confirmation: 'fail',
                     message: err.message
                 })
-            });
+            })
     });
+
+    Guard.model.findOne({ssn: body.supervisor})
+        .then(guard => {
+            program.supervisor = guard.ssn;
+
+            Guard.model.findOneAndUpdate({ssn: guard.ssn}, {supervises: body.name})
+                .catch(err => {
+                    res.json({
+                        confirmation: 'fail',
+                        message: err.message
+                    })
+                });
+
+            Program.create(program)
+                .then(program => {
+                    res.json({
+                        confirmation: 'success',
+                        data: program
+                    })
+                })
+                .catch(err => {
+                    res.json({
+                        confirmation: 'fail',
+                        message: err.message
+                    })
+                })
+        })
+        .catch(err => {
+            res.json({
+                confirmation: 'fail',
+                message: err.message
+            })
+        });
+});
 
 module.exports = router;
