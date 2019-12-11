@@ -47,6 +47,10 @@ function addRow(tbl, data) {
         addCell(tr, data.releaseDate)
     }
 
+    data.courtDates.forEach((date, index) => {
+        data.courtDates[index] = date.split('T')[0]
+    });
+
     addCell(tr, data.courtDates);
 
     tbl.appendChild(tr)

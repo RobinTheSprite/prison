@@ -31,6 +31,7 @@ function addRow(tbl, data) {
     var tr = document.createElement('tr');
 
     addCell(tr, data.name);
+    addCell(tr, data.clearance);
     addCell(tr, data.supervisor);
     addCell(tr, data.workers);
 
